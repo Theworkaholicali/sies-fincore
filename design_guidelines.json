@@ -1,0 +1,174 @@
+{
+  "project_name": "SIES FinCore",
+  "institution_name": "SIES College of Arts, Science & Commerce (Autonomous), Nerul, Navi Mumbai",
+  "app_archetype": "Enterprise Financial SaaS / Institutional Financial Intelligence Platform",
+  "target_quality_bar": "Premium fintech + institutional treasury & accounting intelligence (Bloomberg Terminal meets Modern Institutional Treasury)",
+  "file_type_extension": ".js",
+  "user_choices": {
+    "theme_mode": "Both light and dark themes with dark as default",
+    "currency_format": "INR ₹ with Indian number formatting (Lakhs and Crores e.g. ₹1,25,40,000 / 1.25 Cr)",
+    "startup_sequence": "Premium startup/loading animation with subtle finance-related motion (floating currency silhouettes, financial data particles, flowing transaction lines, subtle graph draw) followed by SIES logo reveal and 'SIES FinCore' title",
+    "animations": "Restrained, high-quality, professional micro-animations (number count-ups, sparklines drawing, skeleton loaders, subtle table row reveals)",
+    "branding": "Exact SIES College branding: SIES logo with orange sunburst mark, 'SIES' wordmark, 'RISE WITH EDUCATION' tagline, and '(Nerul) College of Arts, Science & Commerce (Autonomous)' subtext",
+    "em_dash_rule": "NEVER use the em dash character (— or &mdash;). Use standard hyphens (-), en-dashes with spaces, or pipes (|) instead."
+  },
+  "typography": {
+    "primary_font": "Plus Jakarta Sans, Inter, or system-ui sans-serif",
+    "financial_numbers_font": "JetBrains Mono, Fira Code, or tabular lining figures (font-mono / tabular-nums)",
+    "font_weights": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "scale_hierarchy": {
+      "h1_hero_title": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight",
+      "h2_section_title": "text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight",
+      "h3_card_title": "text-base sm:text-lg font-semibold tracking-normal",
+      "h4_widget_label": "text-xs uppercase tracking-wider font-semibold text-muted-foreground",
+      "body_text": "text-sm sm:text-base leading-relaxed",
+      "small_label": "text-xs font-medium",
+      "table_data": "text-xs sm:text-sm font-mono tracking-tight"
+    },
+    "anti_patterns": [
+      "No decorative script or serif display fonts for enterprise tables",
+      "No font sizes larger than 5xl (no 7xl or 8xl text)",
+      "Always set tabular-nums for all financial numbers and grid balances"
+    ]
+  },
+  "colors": {
+    "dark_mode": {
+      "base_bg": "#0B0F17",
+      "surface_base": "#111827",
+      "surface_elevated": "#1F2937",
+      "surface_card": "#161F2E",
+      "surface_hover": "#253346",
+      "border_subtle": "#1E293B",
+      "border_medium": "#334155",
+      "text_primary": "#F8FAFC",
+      "text_secondary": "#94A3B8",
+      "text_muted": "#64748B",
+      "brand_orange_accent": "#F97316",
+      "brand_gold_accent": "#D97706",
+      "financial_positive_green": "#10B981",
+      "financial_positive_green_bg": "rgba(16, 185, 129, 0.12)",
+      "financial_negative_red": "#EF4444",
+      "financial_negative_red_bg": "rgba(239, 68, 68, 0.12)",
+      "financial_warning_amber": "#F59E0B",
+      "financial_info_blue": "#3B82F6"
+    },
+    "light_mode": {
+      "base_bg": "#F8FAFC",
+      "surface_base": "#FFFFFF",
+      "surface_elevated": "#F1F5F9",
+      "surface_card": "#FFFFFF",
+      "surface_hover": "#F8FAFC",
+      "border_subtle": "#E2E8F0",
+      "border_medium": "#CBD5E1",
+      "text_primary": "#0F172A",
+      "text_secondary": "#475569",
+      "text_muted": "#64748B",
+      "brand_orange_accent": "#EA580C",
+      "brand_gold_accent": "#B45309",
+      "financial_positive_green": "#059669",
+      "financial_positive_green_bg": "#ECFDF5",
+      "financial_negative_red": "#DC2626",
+      "financial_negative_red_bg": "#FEF2F2",
+      "financial_warning_amber": "#D97706",
+      "financial_info_blue": "#2563EB"
+    },
+    "rules": [
+      "NO transparent backgrounds on dropdowns, modals, popovers, sticky headers, or submenus",
+      "NO full neon gradients, NO rainbow accents, NO bright purple AI slop (#7351B7 strictly forbidden)",
+      "Status indications MUST combine color + icon + clear status text (never color alone)",
+      "Hover states must explicitly declare hover text color to prevent invisible dark-on-dark text"
+    ]
+  },
+  "layout_and_navigation": {
+    "shell_structure": {
+      "sidebar": "Collapsible desktop sidebar (260px expanded, 72px collapsed) with SIES FinCore logo mark, institutional badge, and 14 primary navigation modules",
+      "header": "Sticky top bar with z-50, backdrop blur, breadcrumbs, search (Ctrl+K), Financial Year switcher (e.g. FY 2025-26), notifications panel with unread badge, light/dark theme toggle, user profile menu",
+      "main_canvas": "Max-width fluid layout with generous padding (p-6 to p-8), responsive grid breakpoints, zero horizontal scrollbar leaks"
+    },
+    "modules_list": [
+      {"id": "dashboard", "label": "Executive Dashboard", "icon": "LayoutDashboard", "description": "High-level institutional KPIs, revenue/expense trends, cash balances, quick actions"},
+      {"id": "finance", "label": "Financial Control", "icon": "BuildingBank", "description": "Cash flow, bank account reconciliations, liquidity management, treasury monitoring"},
+      {"id": "accounting", "label": "Accounting Engine", "icon": "BookOpen", "description": "Chart of Accounts (7-level structured COA), Journals, General Ledger, Trial Balance, P&L, Balance Sheet"},
+      {"id": "fees", "label": "Student Fee Ledger", "icon": "GraduationCap", "description": "Degree & Junior college fee collection, outstanding fee rosters, student ledger drill-down, payment gateway sync"},
+      {"id": "budget", "label": "Budget Management", "icon": "PieChart", "description": "Departmental budget allocation, encumbrance tracking, variance analysis, approval workflows"},
+      {"id": "procurement", "label": "Procurement & AP/AR", "icon": "ShoppingBag", "description": "Vendor registry, Purchase Orders (PO), Goods Received Notes (GRN), 3-Way Invoice Matching, Accounts Payable & Receivable"},
+      {"id": "assets", "label": "Asset Registry", "icon": "Landmark", "description": "Fixed assets, infrastructure depreciation (SLM/WDV), equipment register, lab asset tracking"},
+      {"id": "grants", "label": "Grants & Research", "icon": "Award", "description": "UGC, RUSA, DST research grants, endowment funds, grant utilization certificates (UC)"},
+      {"id": "analytics", "label": "Intelligence & Analytics", "icon": "TrendingUp", "description": "Predictive enrollment fee yield, multi-year spending patterns, financial ratio analysis"},
+      {"id": "reports", "label": "Reports Center", "icon": "FileText", "description": "Audited statements, NAAC/NIRF financial disclosures, Tax reports (TDS, GST), customizable exports (PDF/XLSX)"},
+      {"id": "audit", "label": "Audit Trail & Logs", "icon": "ShieldCheck", "description": "Immutable transaction logs, user activity, approval history, compliance flags"},
+      {"id": "documents", "label": "Document Vault", "icon": "FolderCheck", "description": "Digital voucher archive, sanction letters, vendor contracts, bank statements"},
+      {"id": "ai_assistant", "label": "AI Finance Assistant", "icon": "Sparkles", "description": "Read-only financial intelligence query engine (e.g., 'Compare FY25 Science dept expenditure vs FY24')"},
+      {"id": "administration", "label": "Administration & Access", "icon": "Settings", "description": "Role-Based Access Control (RBAC), approval limits, fee structure master setup"}
+    ]
+  },
+  "interactive_components": {
+    "tables": {
+      "features": ["Sticky headers", "Column sorting", "Multi-column search filtering", "Pagination with rows-per-page selector", "Row selection checkboxes", "Drill-down side panel/modal on row click", "Export to CSV/PDF simulated"],
+      "styling": "Dense typography, thin borders (#1E293B / #E2E8F0), numeric right-alignment, hover row elevation"
+    },
+    "kpi_cards": {
+      "elements": ["Metric Title", "Current Value in INR (formatted in Lakhs/Crores)", "Previous Period Delta (% and absolute)", "Visual Trend Sparkline or mini bar", "Status indicator pill (Positive / Warning / Danger / Neutral)"]
+    },
+    "modals_and_sheets": {
+      "styling": "Semi-solid surface bg with dark backdrop backdrop-blur-md, clear close action button, explicit text contrast"
+    },
+    "command_k": {
+      "shortcut": "Ctrl+K / Cmd+K",
+      "actions": ["Jump to module", "Search student invoice or fee receipt", "Search ledger account code", "Toggle light/dark theme", "Generate financial report"]
+    }
+  },
+  "motion_and_effects": {
+    "loading_screen": {
+      "description": "Full-screen high-tech financial sequence on initial boot",
+      "animations": [
+        "Floating subtle currency silhouettes (₹, %, 📈)",
+        "Flowing matrix of monetary transaction particles",
+        "Line graph auto-drawing with glow effect",
+        "Smooth scale & reveal of official SIES emblem with sunburst ray motion",
+        "Elegant title reveal: 'SIES FinCore' - Enterprise Financial Intelligence"
+      ]
+    },
+    "micro_interactions": {
+      "number_countup": "Animated count-up for major KPI totals on tab change or filter apply",
+      "chart_draw": "Smooth path draw transitions for Recharts / SVG line charts",
+      "skeleton_loaders": "Shimmering dark/light skeleton blocks matching table and card layout structures"
+    }
+  },
+  "data_testid_convention": {
+    "rule": "Every interactive button, link, tab, input, table, modal, and key metric card MUST have a descriptive data-testid attribute in kebab-case.",
+    "examples": [
+      "data-testid='startup-loader'",
+      "data-testid='global-header'",
+      "data-testid='command-search-input'",
+      "data-testid='theme-toggle-button'",
+      "data-testid='financial-year-select'",
+      "data-testid='sidebar-module-fees'",
+      "data-testid='kpi-card-total-revenue'",
+      "data-testid='student-fee-table'",
+      "data-testid='drilldown-modal-close-button'",
+      "data-testid='ai-assistant-query-input'"
+    ]
+  },
+  "image_urls": {
+    "sies_logo_mark": "https://images.unsplash.com/photo-1599104040457-fe0e8c9ae77e?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "campus_architecture_bg": "https://images.pexels.com/photos/31656148/pexels-photo-31656148.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "financial_texture_bg": "https://images.unsplash.com/photo-1776875479148-e51ea920282c?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "bank_partner_logo_1": "https://images.unsplash.com/photo-1617944420044-877cbed124bd?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "instructions_to_main_agent": [
+    "Ensure all numbers use Indian Numbering System (e.g. ₹1,45,20,500 for 1.45 Crores or ₹8,50,000 for 8.5 Lakhs). Include a helper utility formatINR(value).",
+    "Strictly avoid the em dash character in any text string or UI label. Use hyphens (-) or colons (:) instead.",
+    "Default theme must be dark ('dark' class applied to root html/body or state 'dark'). Toggling theme changes all semantic classes smoothly.",
+    "Implement the full startup/loading sequence on initial render with a option to skip or re-replay from header.",
+    "Ensure complete drill-down capability: clicking any KPI card or ledger entry opens a detail view with line-item transactions.",
+    "The AI Assistant must be realistic, interactive, and pre-populated with institutional queries like 'Show top 5 departments exceeding Q3 budget' or 'Fee collection variance in Science Stream'.",
+    "Add data-testid to every interactive component for automated test verification."
+  ]
+}
