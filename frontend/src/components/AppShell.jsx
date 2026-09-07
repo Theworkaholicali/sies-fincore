@@ -9,7 +9,7 @@ import {
   LayoutDashboard, Landmark, BookOpen, GraduationCap, PieChart,
   ShoppingBag, Boxes, Award, TrendingUp, FileText, ShieldCheck,
   FolderCheck, Sparkles, Settings, Search, Bell, Sun, Moon,
-  ChevronLeft, LogOut, PanelLeftClose, PanelLeft, Command,
+  ChevronLeft, LogOut, PanelLeftClose, PanelLeft, Command, CheckSquare,
 } from "lucide-react";
 import {
   CommandDialog, CommandInput, CommandList, CommandEmpty,
@@ -33,6 +33,7 @@ const NAV = [
   { id: "fees", label: "Student Fee Ledger", icon: GraduationCap, path: "/fees" },
   { id: "budget", label: "Budget Management", icon: PieChart, path: "/budget" },
   { id: "procurement", label: "Procurement & AP/AR", icon: ShoppingBag, path: "/procurement" },
+  { id: "approvals", label: "Approval Workflows", icon: CheckSquare, path: "/approvals" },
   { id: "assets", label: "Asset Registry", icon: Boxes, path: "/assets" },
   { id: "grants", label: "Grants & Research", icon: Award, path: "/grants" },
   { id: "analytics", label: "Intelligence & Analytics", icon: TrendingUp, path: "/analytics" },

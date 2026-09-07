@@ -17,7 +17,13 @@ from routes_procurement import router as procurement_router
 from routes_dashboard import router as dashboard_router
 from routes_audit import router as audit_router
 from routes_ai import router as ai_router
+from routes_approvals import router as approvals_router
+from routes_periods import router as periods_router
+from routes_bank import router as bank_router
+from routes_reports import router as reports_router
 from seed import seed_all
+from seed_v2 import seed_v2
+from engine import PeriodLocked
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -27,8 +33,18 @@ app = FastAPI(title="SIES FinCore API")
 
 app.include_router(auth_router)
 for r in (master_router, fees_router, finance_router, procurement_router,
-          dashboard_router, audit_router, ai_router):
+          dashboard_router, audit_router, ai_router, approvals_router,
+          periods_router, bank_router, reports_router):
     app.include_router(r)
+
+
+from fastapi import Request
+from fastapi.responses import JSONResponse
+
+
+@app.exception_handler(PeriodLocked)
+async def _period_locked_handler(request: Request, exc: PeriodLocked):
+    return JSONResponse(status_code=400, content={"detail": str(exc)})
 
 
 @app.get("/api/health")
@@ -60,6 +76,7 @@ async def startup():
     await db.payments.create_index("idempotency_key", unique=True)
     try:
         await seed_all()
+        await seed_v2()
     except Exception as e:
         logger.error(f"Seeding error: {e}")
     await seed_admin()

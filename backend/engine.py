@@ -12,6 +12,21 @@ class UnbalancedJournal(Exception):
     pass
 
 
+class PeriodLocked(Exception):
+    pass
+
+
+async def ensure_period_open(period_code):
+    """Reject postings into a closed or locked financial period."""
+    if not period_code:
+        return
+    p = await db.financial_periods.find_one({"code": period_code})
+    if p and p.get("status") in ("closed", "locked"):
+        raise PeriodLocked(
+            f"Financial period {p.get('label', period_code)} is {p['status']} "
+            f"and cannot accept new postings.")
+
+
 async def next_seq(name: str) -> int:
     doc = await db.counters.find_one_and_update(
         {"_id": name}, {"$inc": {"value": 1}}, upsert=True, return_document=True)
@@ -22,6 +37,7 @@ async def post_journal(narration, lines, date=None, period=None, fy=None,
                        source="manual", source_id="", created_by="system",
                        created_by_name="System"):
     """lines: [{account_code, debit, credit, description}]. Rejects unbalanced."""
+    await ensure_period_open(period)
     total_debit = Decimal("0")
     total_credit = Decimal("0")
     norm_lines = []

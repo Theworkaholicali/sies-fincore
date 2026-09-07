@@ -18,3 +18,15 @@ export function formatApiErrorDetail(detail) {
 }
 
 export default api;
+
+export async function downloadFile(url, params, filename) {
+  const res = await api.get(url, { params, responseType: "blob" });
+  const blob = new Blob([res.data]);
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
+}

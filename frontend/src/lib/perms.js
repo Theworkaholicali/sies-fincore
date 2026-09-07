@@ -2,12 +2,12 @@
 export const NAV_VIEW = {
   super_admin: "*",
   finance_manager: "*",
-  management: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "assets", "grants", "analytics", "reports", "audit", "documents", "ai_assistant"],
-  auditor: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "assets", "grants", "analytics", "reports", "audit", "documents", "ai_assistant"],
-  principal: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "assets", "grants", "analytics", "reports", "audit", "documents", "ai_assistant"],
-  accountant: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "reports", "analytics", "documents", "ai_assistant"],
-  department_head: ["dashboard", "budget", "procurement", "finance", "reports", "analytics", "ai_assistant"],
-  procurement_officer: ["dashboard", "procurement", "finance", "budget", "documents", "reports"],
+  management: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "assets", "grants", "analytics", "reports", "audit", "documents", "ai_assistant", "approvals"],
+  auditor: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "assets", "grants", "analytics", "reports", "audit", "documents", "ai_assistant", "approvals"],
+  principal: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "assets", "grants", "analytics", "reports", "audit", "documents", "ai_assistant", "approvals"],
+  accountant: ["dashboard", "finance", "accounting", "fees", "budget", "procurement", "reports", "analytics", "documents", "ai_assistant", "approvals"],
+  department_head: ["dashboard", "budget", "procurement", "finance", "reports", "analytics", "ai_assistant", "approvals"],
+  procurement_officer: ["dashboard", "procurement", "finance", "budget", "documents", "reports", "approvals"],
   student: ["fees"],
   vendor: ["procurement"],
 };
