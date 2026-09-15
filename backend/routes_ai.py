@@ -83,32 +83,32 @@ async def ask(body: AskIn, user: dict = Depends(require("ai_assistant", "view"))
         raise HTTPException(400, "Please enter a question.")
     context = await _build_context(body.financial_year)
     key = os.environ.get("OPENAI_API_KEY")
-if not key:
-    raise HTTPException(503, "AI assistant is not configured.")
-
-try:
-    client = AsyncOpenAI(api_key=key)
-
-    prompt = (
-        f"Verified financial data context:\n{context}\n\n"
-        f"Question: {body.question}\n\n"
-        f"Answer using only the verified data above."
-    )
-
-    response = await client.responses.create(
-        model=os.environ.get("OPENAI_MODEL", "gpt-5.5"),
-        instructions=SYSTEM,
-        input=prompt,
-    )
-
-    answer = response.output_text
-
-except Exception as e:
-    raise HTTPException(
-        502,
-        f"The assistant could not complete the request: {e}"
-    )
-    await db.ai_chats.insert_one({
-        "user_id": user["id"], "question": body.question, "answer": str(answer),
-        "financial_year": body.financial_year})
-    return {"answer": str(answer), "financial_year": body.financial_year}
+    if not key:
+        raise HTTPException(503, "AI assistant is not configured.")
+    
+    try:
+        client = AsyncOpenAI(api_key=key)
+    
+        prompt = (
+            f"Verified financial data context:\n{context}\n\n"
+            f"Question: {body.question}\n\n"
+            f"Answer using only the verified data above."
+        )
+    
+        response = await client.responses.create(
+            model=os.environ.get("OPENAI_MODEL", "gpt-5.5"),
+            instructions=SYSTEM,
+            input=prompt,
+        )
+    
+        answer = response.output_text
+    
+    except Exception as e:
+        raise HTTPException(
+            502,
+            f"The assistant could not complete the request: {e}"
+        )
+        await db.ai_chats.insert_one({
+            "user_id": user["id"], "question": body.question, "answer": str(answer),
+            "financial_year": body.financial_year})
+        return {"answer": str(answer), "financial_year": body.financial_year}
