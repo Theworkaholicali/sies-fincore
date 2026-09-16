@@ -27,7 +27,14 @@ export default function AIAssistant() {
     setLoading(true);
     try {
       const r = await api.post("/ai/ask", { question: q, financial_year: fy });
-      setMessages((m) => [...m, { role: "assistant", text: r.data.answer, fy: r.data.financial_year }]);
+
+const answer = r?.data?.answer ?? r?.answer ?? "The assistant returned no answer.";
+const responseYear = r?.data?.financial_year ?? r?.financial_year ?? fy;
+
+setMessages((m) => [
+  ...m,
+  { role: "assistant", text: answer, fy: responseYear }
+]);
     } catch (e) {
       setMessages((m) => [...m, { role: "assistant", text: e.response?.data?.detail || "The assistant could not complete the request.", error: true }]);
     } finally {
