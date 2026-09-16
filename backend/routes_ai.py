@@ -96,10 +96,12 @@ async def ask(body: AskIn, user: dict = Depends(require("ai_assistant", "view"))
         )
     
         response = await client.responses.create(
-            model=os.environ.get("OPENAI_MODEL", "gpt-5.5"),
-            instructions=SYSTEM,
-            input=prompt,
-        )
+    model=os.environ.get("OPENAI_MODEL", "gpt-5.5"),
+    instructions=SYSTEM,
+    input=prompt,
+    max_output_tokens=500,
+    text={"format": {"type": "text"}},
+)
     
         answer = response.output_text
     
