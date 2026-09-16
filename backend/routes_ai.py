@@ -71,6 +71,10 @@ class AskIn(BaseModel):
     question: str
     financial_year: str = "2025-26"
 
+class AskOut(BaseModel):
+    answer: str
+    financial_year: str
+
 
 @router.get("/ai/suggestions")
 async def suggestions(user: dict = Depends(require("ai_assistant", "view"))):
@@ -78,7 +82,10 @@ async def suggestions(user: dict = Depends(require("ai_assistant", "view"))):
 
 
 @router.post("/ai/ask")
-async def ask(body: AskIn, user: dict = Depends(require("ai_assistant", "view"))):
+async def ask(
+    body: AskIn,
+    user: dict = Depends(require("ai_assistant", "view"))
+) -> AskOut:
     if not body.question.strip():
         raise HTTPException(400, "Please enter a question.")
     context = await _build_context(body.financial_year)
