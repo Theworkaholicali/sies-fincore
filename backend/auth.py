@@ -111,12 +111,17 @@ async def login(body: LoginIn, request: Request, response: Response):
         raise HTTPException(status_code=401, detail="Invalid email or password.")
     await db.login_attempts.delete_one({"identifier": ident})
     uid = str(user["_id"])
-    _set_cookies(response, create_access_token(uid, email), create_refresh_token(uid))
+    access_token = create_access_token(uid, email)
+    refresh_token = create_refresh_token(uid)
+    _set_cookies(response, access_token, refresh_token)
     await audit(user, "login", "session", uid, "User signed in")
     user["id"] = uid
     user.pop("password_hash", None)
     user.pop("_id", None)
-    return user
+    return {
+    **user,
+    "access_token": access_token
+    }
 
 
 @auth_router.post("/logout")
