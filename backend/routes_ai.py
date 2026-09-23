@@ -2,6 +2,7 @@
 import os
 from openai import AsyncOpenAI
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from core import db, num
 from auth import require, get_current_user
@@ -71,53 +72,105 @@ class AskIn(BaseModel):
     question: str
     financial_year: str = "2025-26"
 
-class AskOut(BaseModel):
-    answer: str
-    financial_year: str
-
 
 @router.get("/ai/suggestions")
 async def suggestions(user: dict = Depends(require("ai_assistant", "view"))):
     return {"suggestions": SUGGESTED}
 
 
-@router.post("/ai/ask")
+@router.post("/ai/ask", response_model=None)
 async def ask(
     body: AskIn,
     user: dict = Depends(require("ai_assistant", "view"))
-) -> AskOut:
+):
     if not body.question.strip():
         raise HTTPException(400, "Please enter a question.")
-    context = await _build_context(body.financial_year)
-    key = os.environ.get("OPENAI_API_KEY")
-    if not key:
-        raise HTTPException(503, "AI assistant is not configured.")
-    
+
     try:
+        context = await _build_context(body.financial_year)
+
+        key = os.environ.get("OPENAI_API_KEY")
+        if not key:
+            raise HTTPException(503, "AI assistant is not configured.")
+
         client = AsyncOpenAI(api_key=key)
-    
+
         prompt = (
             f"Verified financial data context:\n{context}\n\n"
             f"Question: {body.question}\n\n"
-            f"Answer using only the verified data above."
+            "Answer using only the verified financial data above."
         )
-    
+
         response = await client.responses.create(
-    model=os.environ.get("OPENAI_MODEL", "gpt-5.5"),
-    instructions=SYSTEM,
-    input=prompt,
-    max_output_tokens=500,
-    text={"format": {"type": "text"}},
-)
-    
-        answer = response.output_text
-    
-    except Exception as e:
-        raise HTTPException(
-            502,
-            f"The assistant could not complete the request: {e}"
+            model=os.environ.get("OPENAI_MODEL", "gpt-5.6-luna"),
+            instructions=SYSTEM,
+            input=prompt,
+            max_output_tokens=1200,
+            text={"format": {"type": "text"}},
         )
-        await db.ai_chats.insert_one({
-            "user_id": user["id"], "question": body.question, "answer": str(answer),
-            "financial_year": body.financial_year})
-        return {"answer": str(answer), "financial_year": body.financial_year}
+
+        answer = ""
+
+        # Preferred SDK helper
+        try:
+            answer = (response.output_text or "").strip()
+        except Exception:
+            answer = ""
+
+        # Safe fallback for Responses API output items
+        if not answer:
+            for item in getattr(response, "output", []) or []:
+                if getattr(item, "type", None) != "message":
+                    continue
+
+                for content in getattr(item, "content", []) or []:
+                    if getattr(content, "type", None) == "output_text":
+                        text = getattr(content, "text", None)
+                        if text:
+                            answer += str(text)
+
+                if answer:
+                    break
+
+        # Never allow the endpoint to return None or an invalid response.
+        if not answer:
+            answer = (
+                "The financial data was retrieved successfully, but the AI "
+                "service did not return a text response. Please try the "
+                "question again."
+            )
+
+        # Chat history must never be allowed to break the AI response.
+        try:
+            await db.ai_chats.insert_one({
+                "user_id": user["id"],
+                "question": body.question,
+                "answer": answer,
+                "financial_year": body.financial_year,
+            })
+        except Exception:
+            pass
+
+        return JSONResponse(
+            content={
+                "answer": answer,
+                "financial_year": body.financial_year,
+            }
+        )
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        # Return a valid API shape instead of allowing an unhandled
+        # exception or None response to reach FastAPI.
+        return JSONResponse(
+            status_code=502,
+            content={
+                "answer": (
+                    "The Finance Assistant could not complete this request. "
+                    "Please try again."
+                ),
+                "financial_year": body.financial_year,
+            }
+        )
