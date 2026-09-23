@@ -33,7 +33,6 @@ const NAV = [
   { id: "fees", label: "Student Fee Ledger", icon: GraduationCap, path: "/fees" },
   { id: "budget", label: "Budget Management", icon: PieChart, path: "/budget" },
   { id: "procurement", label: "Procurement & AP/AR", icon: ShoppingBag, path: "/procurement" },
-  { id: "approvals", label: "Approval Workflows", icon: CheckSquare, path: "/approvals" },
   { id: "assets", label: "Asset Registry", icon: Boxes, path: "/assets" },
   { id: "grants", label: "Grants & Research", icon: Award, path: "/grants" },
   { id: "analytics", label: "Intelligence & Analytics", icon: TrendingUp, path: "/analytics" },
